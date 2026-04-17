@@ -3,7 +3,7 @@ class Tank {
   float x, y, w, h, speed, health;
   PImage iTankW, iTankA, iTankS, iTankD;
   char idir;
-  
+
   // Constructor
   Tank() {
     x = 100.0;
@@ -23,14 +23,13 @@ class Tank {
     imageMode(CENTER);
     if (idir == 'w') {
       image(iTankW, x, y);
-    }else if(idir == 'a') {
+    } else if (idir == 'a') {
       image(iTankA, x, y);
-    }else if(idir == 's') {
-    image(iTankS, x, y);
-    }else if(idir == 'd') {
-    image(iTankD, x, y); 
+    } else if (idir == 's') {
+      image(iTankS, x, y);
+    } else if (idir == 'd') {
+      image(iTankD, x, y);
     }
-     
   }
 
   void move(char dir) {
@@ -49,6 +48,5 @@ class Tank {
     }
   }
 
-  void fire() {
-  }
+  // void fire() {
 }
