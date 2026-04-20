@@ -1,7 +1,7 @@
 //nora hinich | apr 1 2026 | tank game
 Tank t1;
 ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
-ArrayList<Obsatcle> obstacles = new ArrayList<Obstacles>();
+ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 Obstacle o1;
 PImage bg1;
 int score;
@@ -43,7 +43,20 @@ void keyPressed() {
 }
 
 void mousePressed() {
+  println(projectiles.size());
   projectiles.add(new Projectile(t1.x, t1.y, 4, 10));
+ float dx = mouseX - t1.x;
+   float dy = mouseX - t1.x;
+   float mag = sqrt(dx*dx + dy*dy);
+   
+   if (mag > 0){
+     dx /= mag;
+     dy /= mag;
+     
+     float speed = 5;
+     projectiles.add(new Projectile(t1.x,t1.y,dx * speed,dy * speed));
+     
+   }
 }
 
 void scorePanel() {

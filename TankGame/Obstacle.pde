@@ -9,7 +9,7 @@ class Obstacle {
     this.y=y;
     this.w=w;
     this.h=h;
-    this.speed=speed;
+    this.speed=5;
     this.health=health;
     idir = 'w';
     obs1 = loadImage("Obs1.png");
