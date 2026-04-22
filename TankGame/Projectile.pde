@@ -9,10 +9,10 @@ class Projectile {
     this.x=x;
     this.y=y;
     this.vx = vx;
-     this.vy = vy;
+    this.vy = vy;
     this.w = 5;
     this.h = 5;
-    speed = 5;
+    speed = 10;
     dir = 'u';
   }
 
@@ -25,4 +25,14 @@ class Projectile {
     x += vx;
     y += vy;
   }
+
+
+boolean intersect(Obstacle o) {
+  float distance = dist(x, y, o.x, o.y);
+  if (distance < 100) {
+    return true;
+  } else {
+    return false;
+  }
+}
 }

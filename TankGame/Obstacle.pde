@@ -9,7 +9,7 @@ class Obstacle {
     this.y=y;
     this.w=w;
     this.h=h;
-    this.speed=5;
+    this.speed=3;
     this.health=health;
     idir = 'w';
     obs1 = loadImage("Obs1.png");
@@ -18,16 +18,13 @@ class Obstacle {
   void display() {
     fill(128);
     imageMode(CENTER);
-    image(obs1,x,y);
+    image(obs1, x, y);
   }
 
   void move() {
     x=x+speed;
-    if(x  > width) {
-     x = 0;
+    if (x  > width+w/2) {
+      x = 0;
     }
-  }
-
-  void fire() {
   }
 }

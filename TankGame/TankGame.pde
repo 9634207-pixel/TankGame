@@ -5,13 +5,16 @@ ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 Obstacle o1;
 PImage bg1;
 int score;
+Timer objTimer;
 void setup() {
   size(500, 500);
   score = 0;
   bg1=loadImage("background.png");
   t1 = new Tank();
-  o1 = new Obstacle(400, 100, 100, 50, 5, 100);
-  obstacles.add(new Obstacle(300,200,100,100,100,int(random(1,10))));
+  //o1 = new Obstacle(400, 100, 100, 50, 5, 100);
+  objTimer = new Timer(1000);
+  objTimer.start();
+  // obstacles.add(new Obstacle(300,200,100,100,100,int(random(1,10))));
 }
 
 
@@ -19,14 +22,34 @@ void draw() {
   background(127);
   imageMode(CORNER);
   image(bg1, 0, 0);
+
+  // distribute object on timer
+  if (objTimer.isFinished()) {
+    // add object
+    obstacles.add(new Obstacle(10, 200, 100, 100, int(random(1, 10)), 10));
+    //restart Timer
+    objTimer.start();
+  }
+  //render and dectect collision
   for (int i = 0; i < projectiles.size(); i++) {
     Projectile p = projectiles.get(i);
+    for (int j = 0; j < obstacles.size(); j++) {
+      Obstacle o = obstacles.get(j);
+      o.display(); 
+      o.move(); 
+      if (p.intersect(o)) {
+        score = score +100;
+        projectiles.remove(i);
+        obstacles.remove(j);
+        continue; 
+      }
+    }
     p.display();
     p.move();
   }
+
   t1.display();
-  o1.display();
-  o1.move();
+
   scorePanel();
 }
 
@@ -44,19 +67,17 @@ void keyPressed() {
 
 void mousePressed() {
   println(projectiles.size());
-  projectiles.add(new Projectile(t1.x, t1.y, 4, 10));
- float dx = mouseX - t1.x;
-   float dy = mouseX - t1.x;
-   float mag = sqrt(dx*dx + dy*dy);
-   
-   if (mag > 0){
-     dx /= mag;
-     dy /= mag;
-     
-     float speed = 5;
-     projectiles.add(new Projectile(t1.x,t1.y,dx * speed,dy * speed));
-     
-   }
+  float dx = mouseX - t1.x;
+  float dy = mouseY - t1.x;
+  float mag = sqrt(dx*dx + dy*dy);
+
+  if (mag > 0) {
+    dx /= mag;
+    dy /= mag;
+
+    float speed = 5;
+    projectiles.add(new Projectile(t1.x, t1.y, dx * speed, dy * speed));
+  }
 }
 
 void scorePanel() {
