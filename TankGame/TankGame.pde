@@ -2,10 +2,11 @@
 Tank t1;
 ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
+ArrayList<PowerUp> powerups = new ArrayList<PowerUp>();
 Obstacle o1;
 PImage bg1;
 int score;
-Timer objTimer;
+Timer objTimer, puTimer;
 void setup() {
   size(500, 500);
   score = 0;
@@ -14,7 +15,9 @@ void setup() {
   //o1 = new Obstacle(400, 100, 100, 50, 5, 100);
   objTimer = new Timer(1000);
   objTimer.start();
-  // obstacles.add(new Obstacle(300,200,100,100,100,int(random(1,10))));
+  puTimer = new Timer(5000);
+  puTimer.start();
+  //obstacles.add(new Obstacle(300,200,100,100,100,int(random(1,10))));
 }
 
 
@@ -30,28 +33,49 @@ void draw() {
     //restart Timer
     objTimer.start();
   }
+  
+  // distribute object on timer
+  if (puTimer.isFinished()) {
+    // add a powerUp
+    powerups.add(new PowerUp(100,100));
+    //restart Timer
+    puTimer.start();
+  }
   //render and dectect collision
   for (int i = 0; i < projectiles.size(); i++) {
     Projectile p = projectiles.get(i);
     for (int j = 0; j < obstacles.size(); j++) {
       Obstacle o = obstacles.get(j);
-      o.display(); 
-      o.move(); 
+      o.display();
+      o.move();
       if (p.intersect(o)) {
         score = score +100;
         projectiles.remove(i);
         obstacles.remove(j);
-        continue; 
+        continue;
       }
     }
+    
+    
+  
     p.display();
     p.move();
+    if (p.reachedEdge()) {
+      projectiles.remove(i);
+    }
+    //detect colllision to tank
+    //impact to change score,health,and obstacle
   }
-
   t1.display();
-
   scorePanel();
 }
+
+  //t1.display();
+
+ // scorePanel();
+  
+
+
 
 void keyPressed() {
   if (key == 'w') {

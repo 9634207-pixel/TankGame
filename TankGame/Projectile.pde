@@ -27,12 +27,16 @@ class Projectile {
   }
 
 
-boolean intersect(Obstacle o) {
-  float distance = dist(x, y, o.x, o.y);
-  if (distance < 100) {
-    return true;
-  } else {
-    return false;
+  boolean intersect(Obstacle o) {
+    float distance = dist(x, y, o.x, o.y);
+    if (distance < w/2) {
+      return true;
+    } else {
+      return false;
+    }
   }
-}
+  boolean reachedEdge() {
+
+    return x<0||x>width||y<0||y>height;
+  }
 }
