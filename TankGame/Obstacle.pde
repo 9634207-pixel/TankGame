@@ -9,7 +9,7 @@ class Obstacle {
     this.y=y;
     this.w=w;
     this.h=h;
-    this.speed=3;
+    this.speed=1;
     this.health=health;
     if (int(random(4))==2) {
       idir = 'w';
